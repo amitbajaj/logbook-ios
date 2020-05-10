@@ -22,7 +22,7 @@
                                 <color key="highlightedColor" cocoaTouchSystemColor="darkTextColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Developed and maintained by Bajaj Tech" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ck1-w4-7sk">
-                                <rect key="frame" x="0.0" y="568.5" width="414" height="20.5"/>
+                                <rect key="frame" x="0.0" y="791.5" width="414" height="20.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -31,10 +31,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Ck1-w4-7sk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="3oc-pC-pfb"/>
-                            <constraint firstItem="Ck1-w4-7sk" firstAttribute="top" secondItem="Erj-V9-sIR" secondAttribute="bottom" constant="100" id="Ikk-uX-26H"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Ck1-w4-7sk" secondAttribute="bottom" constant="50" id="Iev-Ra-cGc"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ck1-w4-7sk" secondAttribute="trailing" id="ImU-qF-Osq"/>
                             <constraint firstItem="Erj-V9-sIR" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="VE8-7i-IhE"/>
-                            <constraint firstItem="Ck1-w4-7sk" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Yeo-hZ-zKc"/>
                             <constraint firstItem="Erj-V9-sIR" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="fqR-CJ-oSr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
