@@ -188,17 +188,17 @@ struct PartyEntry: View {
             .alert(isPresented: self.$showAlert){
                 switch self.alertType{
                 case .SaveError:
-                    return Alert(title: Text("LogBook"), message: Text("Unable to save transaction"))
+                    return Alert(title: Text(Constants.AppName), message: Text("Unable to save transaction"))
                 case .SaveSuccess:
-                    return Alert(title: Text("LogBook"), message: Text("Transaction saved!"))
+                    return Alert(title: Text(Constants.AppName), message: Text("Transaction saved!"))
                 case .PartyLoadError:
-                   return Alert(title: Text("LogBook"), message: Text("Unable to load party list"))
+                   return Alert(title: Text(Constants.AppName), message: Text("Unable to load party list"))
                 case .AmountError:
-                    return Alert(title: Text("LogBook"), message: Text("Invalid amount"))
+                    return Alert(title: Text(Constants.AppName), message: Text("Invalid amount"))
                 case .ExchangeRateError:
-                    return Alert(title: Text("LogBook"), message: Text("Invalid exchange rate"))
+                    return Alert(title: Text(Constants.AppName), message: Text("Invalid exchange rate"))
                 case .SamePartyError:
-                    return Alert(title: Text("LogBook"), message: Text("Select different parties!"))
+                    return Alert(title: Text(Constants.AppName), message: Text("Select different parties!"))
                 }
             }
             .sheet(isPresented: self.$showPickerSheet) {
@@ -213,7 +213,7 @@ struct PartyEntry: View {
             .actionSheet(isPresented: self.$showActionSheet){
                 switch self.actionSheet{
                 case .Currencies:
-                    return ActionSheet(title: Text("LogBook"), message: Text("Select Currency"), buttons: [
+                    return ActionSheet(title: Text(Constants.AppName), message: Text("Select Currency"), buttons: [
                         .default(
                             Text(CurrencyHelper.CurrecyDescriptions.INR.rawValue),
                             action: {self.setCurrencyValue(selectedCurrency: .INR)}
@@ -229,7 +229,7 @@ struct PartyEntry: View {
                         ]
                     )
                 case .ExchangeDirection:
-                    return ActionSheet(title: Text("LogBook"), message: Text("Select Exchange Direction"), buttons: [
+                    return ActionSheet(title: Text(Constants.AppName), message: Text("Select Exchange Direction"), buttons: [
                         .default(
                             Text(Constants.ExchangeTypes["1"]!),
                             action: {self.mExchangeRateDirection = "1"}

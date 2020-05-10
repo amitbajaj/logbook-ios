@@ -11,8 +11,12 @@ import SwiftUI
 
 
 struct TransactionListView: View {
-    enum WhichSheet{
-        case fromDate, toDate, partyPicker
+    enum ActionSheets{
+        case FromDate, ToDate, PartyPicker
+    }
+    
+    enum AlertTypes{
+        case TransactionLoadError, PartyLoadError
     }
     
     @EnvironmentObject var appState: ApplicationState
@@ -28,11 +32,11 @@ struct TransactionListView: View {
     }()
     @State private var toDate = Date()
     @State private var disabled = false
-    @State private var isError = false
-    @State private var isPartyError = false
+    @State private var showAlert = false
+    @State private var alertType = AlertTypes.PartyLoadError
     
     @State private var showSheet = false
-    @State private var whichSheet: WhichSheet = .fromDate
+    @State private var whichSheet: ActionSheets = .FromDate
     @State var selectedParties = PartyList()
     
     
@@ -41,18 +45,18 @@ struct TransactionListView: View {
             NavigationView{
                 VStack{
                     HStack{
-                        Button(action: {self.whichSheet = .fromDate; self.showSheet = true}){
+                        Button(action: {self.whichSheet = .FromDate; self.showSheet = true}){
                             Text("From Date : \(dateFormatter.string(from: self.fromDate))")
                         }
                         Spacer()
-                        Button(action: {self.whichSheet = .toDate; self.showSheet = true}){
+                        Button(action: {self.whichSheet = .ToDate; self.showSheet = true}){
                             Text("To Date : \(dateFormatter.string(from: self.toDate))")
                         }
                     }
                     .padding(.leading)
                     .padding(.trailing)
                     Button(action: {
-                        self.whichSheet = .partyPicker
+                        self.whichSheet = .PartyPicker
                         self.showSheet = true
                     }) {
                         HStack {
@@ -90,23 +94,31 @@ struct TransactionListView: View {
                 }
                 .navigationBarTitle("Transactions")
                 .navigationBarItems(trailing:
-                    HStack{
+                    HStack(spacing: Constants.IconSpacing){
                         Button(action: {self.loadTransactions()}){
-                            Image(systemName: "arrow.2.circlepath")
+                            Image(systemName: Constants.ButtonImages.Reload)
+                                .resizable()
+                                .frame(width: Constants.IconSize, height: Constants.IconSize-5)
                         }
                         if appState.isAdmin {
                             NavigationLink(
                                 destination: DirectEntry()){
-                                Image(systemName: "plus.circle")
+                                    Image(systemName: Constants.ButtonImages.DirectTransaction)
+                                    .resizable()
+                                    .frame(width: Constants.IconSize, height: Constants.IconSize)
                             }
                             NavigationLink(
                                 destination: CurrencyEntry()){
-                                Image(systemName: "dollarsign.circle")
+                                    Image(systemName: Constants.ButtonImages.CurrencyTransaction)
+                                    .resizable()
+                                    .frame(width: Constants.IconSize, height: Constants.IconSize)
                             }
                         }
                         NavigationLink(
                             destination: PartyEntry()){
-                            Image(systemName: "arrow.up.arrow.down.circle")
+                                Image(systemName: Constants.ButtonImages.PartyTransaction)
+                                .resizable()
+                                .frame(width: Constants.IconSize, height: Constants.IconSize)
                         }
                     }
                 )
@@ -119,9 +131,9 @@ struct TransactionListView: View {
             }
         }
         .sheet(isPresented: $showSheet) {
-            if (self.whichSheet == .partyPicker ){
+            if (self.whichSheet == .PartyPicker ){
                 PartyPickerView(allParties: self.$partyList, partyList: self.$selectedParties)
-            }else if (self.whichSheet == .fromDate){
+            }else if (self.whichSheet == .FromDate){
                 LogBookDatePicker(selectedDate: self.$fromDate, minDate: Date(timeIntervalSince1970: 0), maxDate: Date())
             }else{
                 LogBookDatePicker(selectedDate: self.$toDate, minDate: self.fromDate, maxDate: Date())
@@ -130,12 +142,20 @@ struct TransactionListView: View {
         .onAppear{
             self.loadParties()
         }
+        .alert(isPresented: self.$showAlert){
+            switch self.alertType{
+            case .PartyLoadError:
+                return Alert(title: Text(Constants.AppName), message: Text("Unable to load list of parties!"))
+            case .TransactionLoadError:
+                return Alert(title: Text(Constants.AppName), message: Text("Unable to load list of transactions!"))
+            }
+        }
     }
     
     private func loadTransactions(){
         if(self.disabled){return}
         self.disabled = true
-        self.isError = false
+        self.showAlert = false
         var pty = "-1"
         if(selectedParties.partyList.count>0){
             pty = selectedParties.partyList.map{$0.pid}.joined(separator: ",")
@@ -157,13 +177,16 @@ struct TransactionListView: View {
                             self.transactions.transactionList.removeAll()
                             self.transactions.transactionList.append(contentsOf: response.list!)
                         }else{
-                            self.isError = true
+                            self.alertType = .TransactionLoadError
+                            self.showAlert = true
                         }
                     }catch{
-                        self.isError = true
+                        self.alertType = .TransactionLoadError
+                        self.showAlert = true
                     }
                 }else{
-                    self.isError = true
+                    self.alertType = .TransactionLoadError
+                    self.showAlert = true
                 }
                 self.disabled = false
             }
@@ -173,7 +196,7 @@ struct TransactionListView: View {
     private func loadParties(){
         if(self.disabled){return}
         self.disabled = true
-        self.isPartyError = false
+        self.showAlert = false
         HTTPHelper.doHTTPPost(url: Constants.PartiesCodeURL, postData: ["mode":"QRY"]){data, error in
             DispatchQueue.main.async{
                 if(data != nil){
@@ -183,13 +206,16 @@ struct TransactionListView: View {
                             self.partyList.removeAll()
                             self.partyList.append(contentsOf: response.partyList!)
                         }else{
-                            self.isPartyError = true
+                            self.alertType = .PartyLoadError
+                            self.showAlert = true
                         }
                     }catch{
-                        self.isPartyError = true
+                        self.alertType = .PartyLoadError
+                        self.showAlert = true
                     }
                 }else{
-                    self.isPartyError = true
+                    self.alertType = .PartyLoadError
+                    self.showAlert = true
                 }
                 self.disabled = false
             }

@@ -116,15 +116,15 @@ struct TransactionEditor: View {
         .alert(isPresented: self.$showAlert){
             switch self.alertType{
             case .SaveError:
-                return Alert(title: Text("LogBook"), message: Text("Unable to save transaction"))
+                return Alert(title: Text(Constants.AppName), message: Text("Unable to save transaction"))
             case .DeleteError:
-                return Alert(title: Text("LogBook"), message: Text("Unable to delete transaction"))
+                return Alert(title: Text(Constants.AppName), message: Text("Unable to delete transaction"))
             case .SaveSuccess:
-                return Alert(title: Text("LogBook"), message: Text("Transaction saved!"))
+                return Alert(title: Text(Constants.AppName), message: Text("Transaction saved!"))
             case .DeleteSuccess:
-                return Alert(title: Text("LogBook"), message: Text("Transaction deleted!"))
+                return Alert(title: Text(Constants.AppName), message: Text("Transaction deleted!"))
             case .PartyLoadError:
-               return Alert(title: Text("LogBook"), message: Text("Unable to load party list"))
+               return Alert(title: Text(Constants.AppName), message: Text("Unable to load party list"))
             }
         }
             
@@ -139,12 +139,12 @@ struct TransactionEditor: View {
         .actionSheet(isPresented: self.$showActionSheet){
             switch self.actionSheet{
             case .Direction:
-                return ActionSheet(title: Text("LogBook"), message: Text("Select direction"), buttons: [
+                return ActionSheet(title: Text(Constants.AppName), message: Text("Select direction"), buttons: [
                     .default(Text(Constants.ExchangeTypes["1"]!), action: {self.mTxnExchDir = "1"}),
                     .default(Text(Constants.ExchangeTypes["2"]!), action: {self.mTxnExchDir = "2"})
                 ])
             case .DeleteConfirmation:
-                return ActionSheet(title: Text("LogBook"), message: Text("Are you sure you want to delete this transaction?"), buttons: [
+                return ActionSheet(title: Text(Constants.AppName), message: Text("Are you sure you want to delete this transaction?"), buttons: [
                     .default(Text("Yes"), action: {self.deleteTransaction()}),
                     .default(Text("No"))
                 ])

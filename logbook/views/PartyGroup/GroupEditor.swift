@@ -10,11 +10,16 @@ import Foundation
 import SwiftUI
 
 struct GroupEditor: View{
+
+    enum AlertTypes{
+        case SaveError, SaveSuccess, GroupNameMissing
+    }
+    
     @State var groupId: String = "-1"
     @State var groupName: String = ""
-    @State private var isDisabled: Bool = false
-    @State private var isError: Bool = false
-    @State private var isSuccess: Bool = false
+    @State private var isDisabled = false
+    @State private var showAlert = false
+    @State private var alertType = AlertTypes.SaveError
     
     var body: some View{
         ZStack{
@@ -35,28 +40,33 @@ struct GroupEditor: View{
                 .configure { $0.color = .blue }
         }
         .navigationBarTitle(self.groupId == "-1" ? "Add Group": "Edit Group : \(self.groupId)")
-        .alert(isPresented: self.$isError){
-            Alert(title: Text(self.groupId == "-1" ? "Add Group": "Edit Group"), message: Text("Unable to save group"), dismissButton: .default(Text("Ok")))
-        }
-        .alert(isPresented: self.$isSuccess){
-            Alert(title: Text(self.groupId == "-1" ? "Add Group": "Edit Group"), message: Text("Group saved!"), dismissButton: .default(Text("Ok")))
+        .alert(isPresented: self.$showAlert){
+            switch self.alertType{
+            case .SaveError:
+                return Alert(title: Text(Constants.AppName), message: Text("Unable to save group"))
+            case .SaveSuccess:
+                return Alert(title: Text(Constants.AppName), message: Text("Group saved!"))
+            case .GroupNameMissing:
+                return Alert(title: Text(Constants.AppName), message: Text("Enter a group name!"))
+            }
         }
     }
     
     private func saveGroup(){
         var params: [String: Any]
         if(self.groupName.isEmpty){
-            self.isError = true
+            self.alertType = .GroupNameMissing
+            self.showAlert = true
             return
         }
         self.isDisabled = true
-        self.isError = false
-        self.isSuccess = false
+        self.showAlert = false
         if (self.groupId == "-1"){
             params = ["mode":"ADD","grpname": self.groupName]
         }else{
             params = ["mode":"SVEDT","gname":self.groupName, "gid":self.groupId]
         }
+        print(params)
         HTTPHelper.doHTTPPost(url: Constants.GroupsCodeURL, postData: params){ response, error in
             if(response != nil){
                 do{
@@ -64,31 +74,35 @@ struct GroupEditor: View{
                         let status = try JSONDecoder().decode(AddGroupStatus.self, from: response!)
                         DispatchQueue.main.async {
                             if(status.status == Status.success){
-                                self.isSuccess = true
+                                self.alertType = .SaveSuccess
                                 self.groupName=""
                             }else{
-                                self.isError = true
+                                self.alertType = .SaveError
                             }
+                            self.showAlert = true
                             self.isDisabled = false
                         }
                     }else{
                         let status = try JSONDecoder().decode(EditGroupStatus.self, from: response!)
                         DispatchQueue.main.async {
                             if(status.status == Status.success){
-                                self.isSuccess = true
+                                self.alertType = .SaveSuccess
                             }else{
-                                self.isError = true
+                                self.alertType = .SaveError
                             }
+                            self.showAlert = true
                             self.isDisabled = false
                         }
                     }
                 }catch{
+                    self.alertType = .SaveError
                     self.isDisabled = false
-                    self.isError = true
+                    self.showAlert = true
                 }
             }else{
+                self.alertType = .SaveError
                 self.isDisabled = false
-                self.isError = true
+                self.showAlert = true
             }
         }
     }

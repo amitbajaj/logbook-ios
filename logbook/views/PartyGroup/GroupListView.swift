@@ -25,7 +25,7 @@ struct GroupListView: View{
                         Section(header:
                             GroupHeader(
                                 groupName: group.name,
-                                groupId: "")
+                                groupId: group.gid)
                         ){
                             ForEach(group.plist){party in
                                 VStack(alignment: .leading){
@@ -70,15 +70,19 @@ struct GroupListView: View{
                 }
                 .navigationBarTitle("Groups")
                 .navigationBarItems(trailing:
-                    HStack{
+                    HStack(spacing: Constants.IconSpacing){
                         Button(action: {self.loadGroups()}){
-                            Image(systemName: "arrow.2.circlepath")
+                            Image(systemName: Constants.ButtonImages.Reload)
+                                .resizable()
+                                .frame(width: Constants.IconSize, height: Constants.IconSize-5)
                         }
                         NavigationLink(
                         destination: GroupEditor(
                             groupId: "-1",
                             groupName: "")){
-                            Image(systemName: "plus")
+                                Image(systemName: Constants.ButtonImages.Add)
+                                    .resizable()
+                                    .frame(width: Constants.IconSize, height: Constants.IconSize)
                         }
                     }
                 )
@@ -94,7 +98,7 @@ struct GroupListView: View{
             self.loadGroups()
         }
         .alert(isPresented: self.$isError){
-            Alert(title: Text("Logbook"), message: Text("Unable to load groups"))
+            Alert(title: Text(Constants.AppName), message: Text("Unable to load groups"))
         }
     }
     

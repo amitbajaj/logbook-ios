@@ -38,21 +38,29 @@ struct UserListView: View {
                 .navigationBarTitle("Users")
                     .disabled(self.disabled)
                 .navigationBarItems(leading:
-                    HStack{
+                    HStack(spacing: Constants.IconSpacing){
                         Button(action: {self.appState.isLoggedIn=false}){
                             Image(systemName: Constants.ButtonImages.Logout)
+                                .resizable()
+                                .frame(width: Constants.IconSize-5, height: Constants.IconSize)
                         }
                         NavigationLink(destination: UserManagementView()){
                             Image(systemName: Constants.ButtonImages.Password)
+                                .resizable()
+                                .frame(width: Constants.IconSize, height: Constants.IconSize-7)
                         }
                     }, trailing:
-                    HStack{
+                    HStack(spacing: Constants.IconSpacing){
                         Button(action: {self.loadUsers()}){
                             Image(systemName: Constants.ButtonImages.Reload)
+                                .resizable()
+                                .frame(width: Constants.IconSize, height: Constants.IconSize-5)
                         }
                         NavigationLink(
                         destination: UserEditor(userId: "", loginId: "", userName: "", profileId: Constants.UserProfiles.Staff)){
                             Image(systemName: Constants.ButtonImages.Add)
+                                .resizable()
+                                .frame(width: Constants.IconSize, height: Constants.IconSize)
                         }
                     }
                 )
@@ -67,7 +75,7 @@ struct UserListView: View {
             self.loadUsers()
         }
         .alert(isPresented: self.$isError){
-            Alert(title: Text("Logbook"), message: Text("Unable to load users"))
+            Alert(title: Text(Constants.AppName), message: Text("Unable to load users"))
         }
     }
     

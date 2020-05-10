@@ -75,7 +75,7 @@ struct UserEditor: View {
                 .configure{$0.color = .blue}
         }
         .actionSheet(isPresented: self.$showActionSheet){
-            ActionSheet(title: Text("LogBook"), message: Text("Select profile"), buttons: [
+            ActionSheet(title: Text(Constants.AppName), message: Text("Select profile"), buttons: [
                 .default(Text("Admin"), action: {self.profileId = Constants.UserProfiles.Admin}),
                 .default(Text("Staff"), action: {self.profileId = Constants.UserProfiles.Staff})
             ])
@@ -83,19 +83,19 @@ struct UserEditor: View {
         .alert(isPresented: self.$showAlert){
             switch self.alertType{
             case .LoginId:
-                return Alert(title: Text("LogBook"), message: Text("Enter a userId!"))
+                return Alert(title: Text(Constants.AppName), message: Text("Enter a userId!"))
             case .Password:
-                return Alert(title: Text("LogBook"), message: Text("Enter a password!"))
+                return Alert(title: Text(Constants.AppName), message: Text("Enter a password!"))
             case .SaveError:
-                return Alert(title: Text("LogBook"), message: Text("Unable to save user details!"))
+                return Alert(title: Text(Constants.AppName), message: Text("Unable to save user details!"))
             case .SaveSuccess:
-                return Alert(title: Text("LogBook"), message: Text("User saved successfully!"))
+                return Alert(title: Text(Constants.AppName), message: Text("User saved successfully!"))
             case .UpdateError:
-                return Alert(title: Text("LogBook"), message: Text("Unable to update user details!"))
+                return Alert(title: Text(Constants.AppName), message: Text("Unable to update user details!"))
             case .UpdateSuccess:
-                return Alert(title: Text("LogBook"), message: Text("User updated successfully!"))
+                return Alert(title: Text(Constants.AppName), message: Text("User updated successfully!"))
             case .UserName:
-                return Alert(title: Text("LogBook"), message: Text("Enter a user name!"))
+                return Alert(title: Text(Constants.AppName), message: Text("Enter a user name!"))
             }
         }
         .navigationBarTitle(self.getTitle())

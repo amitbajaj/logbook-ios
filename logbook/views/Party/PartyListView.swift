@@ -48,13 +48,17 @@ struct PartyListView: View {
                 }
                 .navigationBarTitle("Parties")
                 .navigationBarItems(trailing:
-                    HStack{
+                    HStack(spacing: Constants.IconSpacing){
                         Button(action: {self.loadParties()}){
-                            Image(systemName: "arrow.2.circlepath")
+                            Image(systemName: Constants.ButtonImages.Reload)
+                                .resizable()
+                                .frame(width: Constants.IconSize, height: Constants.IconSize-5)
                         }
                         NavigationLink(
                             destination: PartyEditor(partyId: "", partyName: "", groupId: "")){
-                            Image(systemName: "plus")
+                                Image(systemName: Constants.ButtonImages.Add)
+                                .resizable()
+                                .frame(width: Constants.IconSize, height: Constants.IconSize)
                         }
                     }
                 )
@@ -70,7 +74,7 @@ struct PartyListView: View {
             self.loadParties()
         }
         .alert(isPresented: self.$isError){
-            Alert(title: Text("Logbook"), message: Text("Unable to load parties"))
+            Alert(title: Text(Constants.AppName), message: Text("Unable to load parties"))
         }
     }
     

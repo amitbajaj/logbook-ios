@@ -179,17 +179,17 @@ struct CurrencyEntry: View {
             .alert(isPresented: self.$showAlert){
                 switch self.alertType{
                 case .SaveError:
-                    return Alert(title: Text("LogBook"), message: Text("Unable to save transaction"))
+                    return Alert(title: Text(Constants.AppName), message: Text("Unable to save transaction"))
                 case .SaveSuccess:
-                    return Alert(title: Text("LogBook"), message: Text("Transaction saved!"))
+                    return Alert(title: Text(Constants.AppName), message: Text("Transaction saved!"))
                 case .PartyLoadError:
-                   return Alert(title: Text("LogBook"), message: Text("Unable to load party list"))
+                   return Alert(title: Text(Constants.AppName), message: Text("Unable to load party list"))
                 case .AmountError:
-                    return Alert(title: Text("LogBook"), message: Text("Invalid amount"))
+                    return Alert(title: Text(Constants.AppName), message: Text("Invalid amount"))
                 case .ExchangeRateError:
-                    return Alert(title: Text("LogBook"), message: Text("Invalid exchange rate"))
+                    return Alert(title: Text(Constants.AppName), message: Text("Invalid exchange rate"))
                 case .SameCurrencyError:
-                    return Alert(title: Text("LogBook"), message: Text("Select different currencies!"))
+                    return Alert(title: Text(Constants.AppName), message: Text("Select different currencies!"))
                 }
             }
             .sheet(isPresented: self.$showPickerSheet) {
@@ -202,7 +202,7 @@ struct CurrencyEntry: View {
             .actionSheet(isPresented: self.$showActionSheet){
                 switch self.actionSheet{
                 case .PostingType:
-                    return ActionSheet(title: Text("LogBook"), message: Text("Select posting"), buttons: [
+                    return ActionSheet(title: Text(Constants.AppName), message: Text("Select posting"), buttons: [
                         .default(Text(Constants.CurrencyPostingTypes.Buy_Text), action: {
                             self.mPostingType = Constants.CurrencyPostingTypes.Buy
                             self.mPostingTypeDescription = Constants.CurrencyPostingTypes.Buy_Text
@@ -213,7 +213,7 @@ struct CurrencyEntry: View {
                         })
                     ])
                 case .Currencies:
-                    return ActionSheet(title: Text("LogBook"), message: Text("Select Currency"), buttons: [
+                    return ActionSheet(title: Text(Constants.AppName), message: Text("Select Currency"), buttons: [
                         .default(
                             Text(CurrencyHelper.CurrecyDescriptions.INR.rawValue),
                             action: {self.setCurrencyValue(selectedCurrency: .INR)}
@@ -229,7 +229,7 @@ struct CurrencyEntry: View {
                         ]
                     )
                 case .ExchangeDirection:
-                    return ActionSheet(title: Text("LogBook"), message: Text("Select Exchange Direction"), buttons: [
+                    return ActionSheet(title: Text(Constants.AppName), message: Text("Select Exchange Direction"), buttons: [
                         .default(
                             Text(Constants.ExchangeTypes["1"]!),
                             action: {self.mExchangeRateDirection = "1"}

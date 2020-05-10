@@ -54,21 +54,21 @@ struct PartyEditor: View {
             ActivityIndicator(style: .large, animate: $isDisabled)
                 .configure {$0.color = .blue}
         }
-        .navigationBarTitle(partyId.isEmpty ? "Add Party" : "Edit Party : (\(partyId))")
+        .navigationBarTitle(partyId.isEmpty ? "Add Party" : "Edit Party")
         .onAppear{
             self.loadGroups()
         }
         .alert(isPresented: $isPartyNameMissing){
-            Alert(title: Text("Logbook"), message: Text("Enter a party name to save"))
+            Alert(title: Text(Constants.AppName), message: Text("Enter a party name to save"))
         }
         .alert(isPresented: $isGroupError){
-            Alert(title: Text("Logbook"), message: Text("Unable to load group list"))
+            Alert(title: Text(Constants.AppName), message: Text("Unable to load group list"))
         }
         .alert(isPresented: $isError){
-            Alert(title: Text("Logbook"), message: Text(partyId.isEmpty ? "Unable to add group" : "Unable to update group"))
+            Alert(title: Text(Constants.AppName), message: Text(partyId.isEmpty ? "Unable to add group" : "Unable to update group"))
         }
         .alert(isPresented: $isSuccess){
-            Alert(title: Text("Logbook"), message: Text("Party saved successfully"))
+            Alert(title: Text(Constants.AppName), message: Text("Party saved successfully"))
         }
     }
     

@@ -81,9 +81,11 @@ struct BalanceReportListView: View {
                 }
                 .navigationBarTitle("Balance Report")
                 .navigationBarItems(trailing:
-                    HStack{
+                    HStack(spacing: Constants.IconSpacing){
                         Button(action: {self.loadTransactions()}){
-                            Image(systemName: "arrow.2.circlepath")
+                            Image(systemName: Constants.ButtonImages.Reload)
+                            .resizable()
+                                .frame(width: Constants.IconSize, height: Constants.IconSize-5)
                         }
                     .disabled(disabled)
                     }
@@ -107,11 +109,11 @@ struct BalanceReportListView: View {
         .alert(isPresented: self.$showAlert){
             switch self.alertSheet{
             case .MultiPartyError:
-                return Alert(title: Text("LogBook"), message: Text("Select parties to show report for!"))
+                return Alert(title: Text(Constants.AppName), message: Text("Select parties to show report for!"))
             case .PartyLoadError:
-                return Alert(title: Text("LogBook"), message: Text("Unable to load party list!"))
+                return Alert(title: Text(Constants.AppName), message: Text("Unable to load party list!"))
             case .ReportError:
-                return Alert(title: Text("LogBook"), message: Text("Unable to generate report"))
+                return Alert(title: Text(Constants.AppName), message: Text("Unable to generate report"))
             }
         }
         .onAppear{

@@ -56,15 +56,15 @@ struct UserManagementView: View {
             .alert(isPresented: self.$showAlert){
                 switch self.alertType{
                 case .CurrentPasswordMissing:
-                    return Alert(title: Text("LogBook"), message: Text("Enter the current password"))
+                    return Alert(title: Text(Constants.AppName), message: Text("Enter the current password"))
                 case .NewPasswordMissing:
-                    return Alert(title: Text("LogBook"), message: Text("Enter the new password"))
+                    return Alert(title: Text(Constants.AppName), message: Text("Enter the new password"))
                 case .PasswordChanged:
-                    return Alert(title: Text("LogBook"), message: Text("Password updated!"))
+                    return Alert(title: Text(Constants.AppName), message: Text("Password updated!"))
                 case .PasswordMismatch:
-                    return Alert(title: Text("LogBook"), message: Text("New and Confirm password should be same"))
+                    return Alert(title: Text(Constants.AppName), message: Text("New and Confirm password should be same"))
                 case .PasswordNotUpdated:
-                    return Alert(title: Text("LogBook"), message: Text("Password could not be updated!"))
+                    return Alert(title: Text(Constants.AppName), message: Text("Password could not be updated!"))
                 }
             }
         }

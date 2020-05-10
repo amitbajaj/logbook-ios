@@ -143,13 +143,13 @@ struct DirectEntry: View {
         .alert(isPresented: self.$showAlert){
             switch self.alertType{
             case .SaveError:
-                return Alert(title: Text("LogBook"), message: Text("Unable to save transaction"))
+                return Alert(title: Text(Constants.AppName), message: Text("Unable to save transaction"))
             case .SaveSuccess:
-                return Alert(title: Text("LogBook"), message: Text("Transaction saved!"))
+                return Alert(title: Text(Constants.AppName), message: Text("Transaction saved!"))
             case .PartyLoadError:
-               return Alert(title: Text("LogBook"), message: Text("Unable to load party list"))
+               return Alert(title: Text(Constants.AppName), message: Text("Unable to load party list"))
             case .AmountError:
-                return Alert(title: Text("LogBook"), message: Text("Invalid amount"))
+                return Alert(title: Text(Constants.AppName), message: Text("Invalid amount"))
             }
         }
         .sheet(isPresented: self.$showPickerSheet) {
@@ -162,7 +162,7 @@ struct DirectEntry: View {
         .actionSheet(isPresented: self.$showActionSheet){
             switch self.actionSheet{
             case .PostingType:
-                return ActionSheet(title: Text("LogBook"), message: Text("Select posting"), buttons: [
+                return ActionSheet(title: Text(Constants.AppName), message: Text("Select posting"), buttons: [
                     .default(Text(Constants.PostingTypes.Credit_Text), action: {
                         self.mPostingType = Constants.PostingTypes.Credit
                         self.mPostingTypeDescription = Constants.PostingTypes.Credit_Text
@@ -173,7 +173,7 @@ struct DirectEntry: View {
                     })
                 ])
             case .Currencies:
-                return ActionSheet(title: Text("LogBook"), message: Text("Select Currency"), buttons: [
+                return ActionSheet(title: Text(Constants.AppName), message: Text("Select Currency"), buttons: [
                     .default(
                         Text(CurrencyHelper.CurrecyDescriptions.INR.rawValue),
                              action: {

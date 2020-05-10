@@ -7,8 +7,11 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum Constants {
+    static let AppName = "LogBook"
+    
     private static let BaseDomain = "dev.bajajtech.in"
     private static let BaseURL = "https://\(BaseDomain)/logbook"
     static let LoginURL = "\(BaseURL)/code/login.php"
@@ -28,6 +31,9 @@ enum Constants {
         static let Reload = "arrow.2.circlepath"
         static let Password = "keyboard"
         static let Logout = "lock.fill"
+        static let DirectTransaction = "plus.circle"
+        static let CurrencyTransaction = "dollarsign.circle"
+        static let PartyTransaction = "arrow.up.arrow.down.circle"
     }
     
     enum TransactionTypes{
@@ -77,4 +83,7 @@ enum Constants {
             return UserProfiles.Staff_Text
         }
     }
+    
+    static let IconSize: CGFloat = 30.0
+    static let IconSpacing: CGFloat = 20.0
 }
