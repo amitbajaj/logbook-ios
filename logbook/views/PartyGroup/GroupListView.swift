@@ -32,18 +32,36 @@ struct GroupListView: View{
                                     Text(party.pname)
                                     HStack{
                                         Spacer()
-                                        Text(CurrencyHelper.formatCurrency(amount: party.inrbal, currency: .INR).amount)
-                                            .foregroundColor(CurrencyHelper.formatCurrency(amount: party.inrbal, currency: .INR).color)
+                                        Text(CurrencyHelper.formatCurrency(
+                                            amount: party.inrbal,
+                                            currency: CurrencyHelper.Currencies.INR).amount
+                                        )
+                                            .foregroundColor(CurrencyHelper.formatCurrency(
+                                                amount: party.inrbal,
+                                                currency: CurrencyHelper.Currencies.INR).color
+                                        )
                                     }
                                     HStack{
                                         Spacer()
-                                        Text(CurrencyHelper.formatCurrency(amount: party.usdbal, currency: .USD).amount)
-                                        .foregroundColor(CurrencyHelper.formatCurrency(amount: party.usdbal, currency: .USD).color)
+                                        Text(CurrencyHelper.formatCurrency(
+                                            amount: party.usdbal,
+                                            currency: CurrencyHelper.Currencies.USD).amount
+                                        )
+                                        .foregroundColor(CurrencyHelper.formatCurrency(
+                                            amount: party.usdbal,
+                                            currency: CurrencyHelper.Currencies.USD).color
+                                        )
                                     }
                                     HStack{
                                         Spacer()
-                                        Text(CurrencyHelper.formatCurrency(amount: party.aedbal, currency: .AED).amount)
-                                        .foregroundColor(CurrencyHelper.formatCurrency(amount: party.aedbal, currency: .AED).color)
+                                        Text(CurrencyHelper.formatCurrency(
+                                            amount: party.aedbal,
+                                            currency: CurrencyHelper.Currencies.AED).amount
+                                        )
+                                        .foregroundColor(CurrencyHelper.formatCurrency(
+                                            amount: party.aedbal,
+                                            currency: CurrencyHelper.Currencies.AED).color
+                                        )
                                     }
                                 }
                             }

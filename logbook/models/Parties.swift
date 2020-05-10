@@ -11,16 +11,13 @@ import Foundation
 struct Party: Codable, Hashable, Identifiable{
     
     enum CodingKeys: String, CodingKey{
-        case status
         case pname = "name"
         case pid = "id"
-        
     }
     
     let id = UUID()
     let pid: String
     let pname: String
-    let status: Status
 }
 
 struct QueryParty: Codable, Hashable, Identifiable{
@@ -64,8 +61,12 @@ struct QueryPartyWithBalance: Codable, Hashable, Identifiable{
     let partyList: [PartyWithBalance]?
 }
 
-final class PartyList: ObservableObject{
+final class PartyWithBalanceList: ObservableObject{
     @Published var partyList = [PartyWithBalance]()
+}
+
+final class PartyList: ObservableObject{
+    @Published var partyList = [Party]()
 }
 
 struct AddPartyStatus: Codable{

@@ -52,3 +52,88 @@ struct LogBookButton: View{
 //        .cornerRadius(40)
     }
 }
+
+
+struct LogBookDatePicker: View{
+    @Binding var selectedDate: Date
+    @State var label: String = ""
+    @State var minDate: Date
+    @State var maxDate: Date
+    @State private var currentDate = Date()
+    @Environment(\.presentationMode) var presentationMode
+    
+    var body: some View{
+        NavigationView{
+            VStack{
+                DatePicker(selection: self.$currentDate, in: self.minDate...self.maxDate, displayedComponents: .date){
+                    Text(self.label)
+                }
+                .labelsHidden()
+                Button(action: {self.currentDate = Date()}){
+                    Text("Today")
+                }
+                Spacer()
+            }
+            .navigationBarTitle("Select date", displayMode: .inline)
+            .navigationBarItems(
+                leading:
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    Text("Cancel")
+                },
+                trailing:
+                Button(action: {
+                    self.selectedDate = self.currentDate
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    Text("OK")
+                }
+            )
+        }
+        .onAppear{
+            self.currentDate = self.selectedDate
+        }
+    }
+}
+
+struct LogBookListPicker: View{
+    @Binding var selectedItem: Int
+    @State var label: String
+    @State var listOfValues: [String]
+    @State private var currentItem = 0
+    @Environment(\.presentationMode) var presentationMode
+    
+    var body: some View{
+        NavigationView{
+            VStack{
+                Picker(selection: $currentItem, label: Text(label)){
+                    ForEach(0 ..< self.listOfValues.count){pIndex in
+                        Text(self.listOfValues[pIndex])
+                    }
+                }
+                .labelsHidden()
+                Spacer()
+            }
+            .navigationBarTitle("\(label)", displayMode: .inline)
+            .navigationBarItems(
+                leading:
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    Text("Cancel")
+                },
+                trailing:
+                Button(action: {
+                    self.selectedItem = self.currentItem
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    Text("OK")
+                }
+            )
+        }
+        .onAppear{
+            self.currentItem = self.selectedItem
+        }
+    }
+}

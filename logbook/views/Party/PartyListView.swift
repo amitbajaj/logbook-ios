@@ -10,19 +10,16 @@ import SwiftUI
 
 struct PartyListView: View {
     @EnvironmentObject var appState: ApplicationState
-    @ObservedObject var parties = PartyList()
-    @Binding var editMode: Bool
+    @ObservedObject var parties = PartyWithBalanceList()
     @State private var disabled = false
     @State private var isError = false
-    
-    
     
     var body: some View {
         ZStack{
             NavigationView{
                 List{
                     ForEach(parties.partyList){party in
-                        NavigationLink(destination: PartyEditor(editMode: self.$editMode, partyId: party.pid, partyName: party.pname, groupId: party.gid)){
+                        NavigationLink(destination: PartyEditor(partyId: party.pid, partyName: party.pname, groupId: party.gid)){
                             VStack(alignment: .leading){
                                 HStack{
                                     Text(party.pname)
@@ -32,18 +29,18 @@ struct PartyListView: View {
                                 
                                 HStack{
                                     Spacer()
-                                    Text(CurrencyHelper.formatCurrency(amount: party.inrbal, currency: .INR).amount)
-                                    .foregroundColor(CurrencyHelper.formatCurrency(amount: party.inrbal, currency: .INR).color)
+                                    Text(CurrencyHelper.formatCurrency(amount: party.inrbal, currency: CurrencyHelper.Currencies.INR).amount)
+                                    .foregroundColor(CurrencyHelper.formatCurrency(amount: party.inrbal, currency: CurrencyHelper.Currencies.INR).color)
                                 }
                                 HStack{
                                     Spacer()
-                                    Text(CurrencyHelper.formatCurrency(amount: party.usdbal, currency: .USD).amount)
-                                    .foregroundColor(CurrencyHelper.formatCurrency(amount: party.usdbal, currency: .USD).color)
+                                    Text(CurrencyHelper.formatCurrency(amount: party.usdbal, currency: CurrencyHelper.Currencies.USD).amount)
+                                    .foregroundColor(CurrencyHelper.formatCurrency(amount: party.usdbal, currency: CurrencyHelper.Currencies.USD).color)
                                 }
                                 HStack{
                                     Spacer()
-                                    Text(CurrencyHelper.formatCurrency(amount: party.aedbal, currency: .AED).amount)
-                                    .foregroundColor(CurrencyHelper.formatCurrency(amount: party.aedbal, currency: .AED).color)
+                                    Text(CurrencyHelper.formatCurrency(amount: party.aedbal, currency: CurrencyHelper.Currencies.AED).amount)
+                                    .foregroundColor(CurrencyHelper.formatCurrency(amount: party.aedbal, currency: CurrencyHelper.Currencies.AED).color)
                                 }
                             }
                         }
@@ -56,7 +53,7 @@ struct PartyListView: View {
                             Image(systemName: "arrow.2.circlepath")
                         }
                         NavigationLink(
-                            destination: PartyEditor(editMode: self.$editMode, partyId: "", partyName: "", groupId: "")){
+                            destination: PartyEditor(partyId: "", partyName: "", groupId: "")){
                             Image(systemName: "plus")
                         }
                     }
@@ -84,29 +81,20 @@ struct PartyListView: View {
         HTTPHelper.doHTTPPost(url: Constants.PartiesCodeURL, postData: loginParams){response, error in
             if(response != nil){
                 do {
-//                    print("Got the response")
-//                    print(String(decoding: response!, as: UTF8.self))
                     let partyList = try JSONDecoder().decode(QueryPartyWithBalance.self, from: response!)
                     DispatchQueue.main.async {
-//                        print("JSON Decoded")
                         if(partyList.status==Status.success){
-//                            print("Response is a success")
                             self.parties.partyList.removeAll()
                             self.parties.partyList.append(contentsOf: partyList.partyList!)
-//                            print(self.groups.groupList.count)
                             self.isError = false
-//                            print("Groups loaded")
                         }else{
-//                            print("Response is a failure")
                             self.isError = true
                         }
                     }
                 }catch{
-//                    print("JSON Decode Error \(error)")
                     self.isError = true
                 }
             }else{
-//                print("Could not get a respinse \(error ?? "NO ERROR MESSAGE")")
                 self.isError=true
             }
             self.disabled=false

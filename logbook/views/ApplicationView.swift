@@ -26,7 +26,7 @@ struct ApplicationView: View{
                 .tag(0)
 
                 
-                PartyManagement()
+                PartyListView()
                     .environmentObject(appState)
                 .tabItem{
                     VStack{
@@ -36,7 +36,8 @@ struct ApplicationView: View{
                 }
                 .tag(1)
                 
-                Text("Transaction Maintenance")
+                TransactionListView()
+                    .environmentObject(appState)
                 .tabItem{
                     VStack{
                         Image(systemName: "arrow.right.arrow.left.square.fill")
@@ -45,7 +46,8 @@ struct ApplicationView: View{
                 }
                 .tag(2)
                 
-                Text("Reports")
+                BalanceReportListView()
+                    .environmentObject(appState)
                 .tabItem{
                     VStack{
                         Image(systemName: "list.bullet")
@@ -54,7 +56,7 @@ struct ApplicationView: View{
                 }
                 .tag(3)
                 
-                Text("User Maintenance")
+                UserListView()
                 .tabItem{
                     VStack{
                         Image(systemName: "person.crop.rectangle.fill")
@@ -62,18 +64,10 @@ struct ApplicationView: View{
                     }
                 }
                 .tag(4)
-                
-                Text("Settings")
-                .tabItem{
-                    VStack{
-                        Image(systemName: "gear")
-                        Text("Settings")
-                    }
-                }
-                .tag(5)
 
             }else{
-                Text("Transaction Maintenance")
+                TransactionListView()
+                    .environmentObject(self.appState)
                 .tabItem{
                     VStack{
                         Image(systemName: "arrow.right.arrow.left.square.fill")
@@ -82,11 +76,12 @@ struct ApplicationView: View{
                 }
                 .tag(2)
                 
-                Text("Settings")
+                UserManagementView()
+                    .environmentObject(self.appState)
                 .tabItem{
                     VStack{
-                        Image(systemName: "gear")
-                        Text("Settings")
+                        Image(systemName: "person.crop.rectangle.fill")
+                        Text("User Management")
                     }
                 }
                 .tag(5)

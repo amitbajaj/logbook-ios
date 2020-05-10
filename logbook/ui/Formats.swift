@@ -17,3 +17,26 @@ struct LogBookFields: TextFieldStyle {
     }
 }
 
+let dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd"
+    return formatter
+}()
+
+func amountFormatter(_ currency: CurrencyHelper.Currencies) -> NumberFormatter {
+    let formatter = NumberFormatter()
+    formatter.allowsFloats = true
+    formatter.minimum = 0
+    switch currency {
+    case .INR:
+        formatter.locale = Locale.init(identifier: Constants.CurrencyLocales.INR)
+        formatter.maximumFractionDigits = 2
+    case .USD:
+        formatter.locale = Locale.init(identifier: Constants.CurrencyLocales.USD)
+        formatter.maximumFractionDigits = 2
+    case .AED:
+        formatter.locale = Locale.init(identifier: Constants.CurrencyLocales.AED)
+        formatter.maximumFractionDigits = 2
+    }
+    return formatter
+}

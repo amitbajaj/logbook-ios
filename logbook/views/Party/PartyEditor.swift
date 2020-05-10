@@ -9,8 +9,6 @@
 import SwiftUI
 
 struct PartyEditor: View {
-    @Binding var editMode: Bool
-
     @State var partyId: String = ""
     @State var partyName: String = ""
     @State var groupId: String = ""
@@ -96,7 +94,6 @@ struct PartyEditor: View {
                             let response = try JSONDecoder().decode(AddPartyStatus.self, from: data!)
                             if(response.status == Status.success){
                                 self.isSuccess = true
-                                self.editMode = false
                             }else{
                                 self.isError = true
                             }
@@ -104,7 +101,6 @@ struct PartyEditor: View {
                             let response = try JSONDecoder().decode(EditPartyStatus.self, from: data!)
                             if(response.status == Status.success){
                                 self.isSuccess = true
-                                self.editMode = false
                             }else{
                                 self.isError = true
                             }
