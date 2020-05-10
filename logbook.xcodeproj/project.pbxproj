@@ -57,7 +57,6 @@
 		731E1206245DC128005AE8C2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		731E1208245DC12B005AE8C2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		731E120B245DC12B005AE8C2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		731E120E245DC12B005AE8C2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		731E1210245DC12B005AE8C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		731E121A245DC1A1005AE8C2 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		731E121C245DC23B005AE8C2 /* HTTPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHelper.swift; sourceTree = "<group>"; };
@@ -93,6 +92,7 @@
 		731E128C2467F3BB005AE8C2 /* UserEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditor.swift; sourceTree = "<group>"; };
 		73FE6E71246818F4009EF227 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		73FE6E7324681993009EF227 /* UserManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManagementView.swift; sourceTree = "<group>"; };
+		73FE6E75246897B3009EF227 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -292,7 +292,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 			);
 			mainGroup = 731E11F3245DC128005AE8C2;
 			productRefGroup = 731E11FD245DC128005AE8C2 /* Products */;
@@ -368,7 +367,7 @@
 		731E120D245DC12B005AE8C2 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				731E120E245DC12B005AE8C2 /* Base */,
+				73FE6E75246897B3009EF227 /* en */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

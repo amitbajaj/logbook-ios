@@ -10,8 +10,10 @@ import SwiftUI
 
 struct LoginView: View {
     @EnvironmentObject var appState: ApplicationState
-    @State private var userId: String = "amitbajaj"
-    @State private var password: String = "password"
+    @State private var userId: String = ""
+    @State private var password: String = ""
+//    @State private var userId: String = "amitbajaj"
+//    @State private var password: String = "password"
     @State private var disabled: Bool = false
     @State private var loginSuccess: Bool = false
     @State private var isError = false
