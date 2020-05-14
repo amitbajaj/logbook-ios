@@ -43,84 +43,84 @@ struct DirectEntry: View {
         ZStack{
             VStack(alignment: .leading){
                 VStack{
-                Button(action:{self.pickerSheet = .PartySheet; self.showPickerSheet=true}){
-                    if(self.partyIndex < self.partyList.count){
+                    Button(action:{self.pickerSheet = .PartySheet; self.showPickerSheet=true}){
+                        if(self.partyIndex < self.partyList.count){
+                            HStack{
+                                Text(self.partyList[self.partyIndex].pname)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(Color(UIColor.systemGray4))
+                                    .font(Font.body.weight(.medium))
+                            }
+                        }else{
+                            Text("No parties in the system")
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
+                        .disabled(self.disabled)
+                    Divider()
+                        .frame(height: 1)
+                        .padding(.horizontal, 30)
+                        .background(Color(UIColor.systemGray4))
+                    Button(action: {self.actionSheet = .Currencies ; self.showActionSheet = true}){
                         HStack{
-                            Text(self.partyList[self.partyIndex].pname)
+                            Text(self.mCurrencyDescription.rawValue)
                             Spacer()
                             Image(systemName: "chevron.right")
                                 .foregroundColor(Color(UIColor.systemGray4))
                                 .font(Font.body.weight(.medium))
                         }
-                    }else{
-                        Text("No parties in the system")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                    }
-                }
-                .disabled(self.disabled)
-                Divider()
-                .frame(height: 1)
-                .padding(.horizontal, 30)
-                .background(Color(UIColor.systemGray4))
-                Button(action: {self.actionSheet = .Currencies ; self.showActionSheet = true}){
-                    HStack{
-                        Text(self.mCurrencyDescription.rawValue)
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(Color(UIColor.systemGray4))
-                            .font(Font.body.weight(.medium))
-                    }
 
-                }
-                .disabled(self.disabled)
-                Divider()
-                 .frame(height: 1)
-                 .padding(.horizontal, 30)
-                 .background(Color(UIColor.systemGray4))
-                Button(action: {self.actionSheet = .PostingType ; self.showActionSheet = true}){
-                    HStack{
-                        Text(self.mPostingTypeDescription)
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(Color(UIColor.systemGray4))
-                            .font(Font.body.weight(.medium))
                     }
-                }
-                .disabled(self.disabled)
-                Divider()
-                 .frame(height: 1)
-                 .padding(.horizontal, 30)
-                 .background(Color(UIColor.systemGray4))
-                Button(action: {self.pickerSheet = .DateSheet; self.showPickerSheet = true}){
-                    HStack{
-                        Text(dateFormatter.string(from: self.mTxnDate))
+                        .disabled(self.disabled)
+                    Divider()
+                        .frame(height: 1)
+                        .padding(.horizontal, 30)
+                        .background(Color(UIColor.systemGray4))
+                    Button(action: {self.actionSheet = .PostingType ; self.showActionSheet = true}){
+                        HStack{
+                            Text(self.mPostingTypeDescription)
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(Color(UIColor.systemGray4))
+                                .font(Font.body.weight(.medium))
+                        }
                     }
-                    .padding(.top, 10)
-                    .padding(.bottom, 10)
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                }
-                .background(Color(UIColor.systemGray4))
-                .foregroundColor(Color.primary)
-                
-
-                VStack{
-                TextField("Amount", text: self.$mTxnAmount)
-                    .keyboardType(.decimalPad)
-                    .disabled(self.disabled)
-                Divider()
-                .frame(height: 1)
-                .padding(.horizontal, 30)
-                .background(Color(UIColor.systemGray4))
-                
-                TextField("Comments", text: self.$mTxnComments)
-                .disabled(self.disabled)
+                        .disabled(self.disabled)
+                    Divider()
+                        .frame(height: 1)
+                        .padding(.horizontal, 30)
+                        .background(Color(UIColor.systemGray4))
+                    Button(action: {self.pickerSheet = .DateSheet; self.showPickerSheet = true}){
+                        HStack{
+                            Text(dateFormatter.string(from: self.mTxnDate))
+                        }
+                            .padding(.top, 10)
+                            .padding(.bottom, 10)
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                    }
+                        .background(Color(UIColor.systemGray4))
+                        .foregroundColor(Color.primary)
                     
-                Divider()
-                .frame(height: 1)
-                .padding(.horizontal, 30)
-                .background(Color(UIColor.systemGray4))
-                }
+
+                    VStack{
+                        TextField("Amount", text: self.$mTxnAmount)
+                            .keyboardType(.decimalPad)
+                            .disabled(self.disabled)
+                        Divider()
+                            .frame(height: 1)
+                            .padding(.horizontal, 30)
+                            .background(Color(UIColor.systemGray4))
+                        
+                        TextField("Comments", text: self.$mTxnComments)
+                            .disabled(self.disabled)
+                            
+                        Divider()
+                            .frame(height: 1)
+                            .padding(.horizontal, 30)
+                            .background(Color(UIColor.systemGray4))
+                    }
                 }
                 HStack{
                     Spacer()
@@ -245,6 +245,7 @@ struct DirectEntry: View {
                 "txnamt": self.mTxnAmount,
                 "txncmts": self.mTxnComments
                 ]
+            self.disabled = true
             HTTPHelper.doHTTPPost(url: Constants.TransactionsCodeURL, postData: params){data, error in
                 DispatchQueue.main.async{
                     if(data != nil){
@@ -261,6 +262,7 @@ struct DirectEntry: View {
                     }else{
                         self.alertType = .SaveError
                     }
+                    self.disabled = false
                     self.showAlert = true
                 }
             }
